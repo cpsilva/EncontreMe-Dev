@@ -1,0 +1,205 @@
+﻿<!--Chave API Google Maps: AIzaSyAHMgbkEvkhYWP0AQUuxpwXlP4y7PGB5oM -->
+<div class="content-wrap" ng-controller="cadastroDesaparecidoController">
+    <main id="content" class="content" role="main">
+
+        <div ng-show="!isCadastro" class="container">
+            <h2 class="page-title">Lista de Pessoas Desaparecidas</h2>
+
+            <!-- Nova Pessoa Desaparecida-->
+            <div class="row">
+                <div class="col">
+                    <div class="panel panel-white">
+                        <div class="panel-body">
+                            <div class="row col-md-12">
+                                <div class="col-md-10">
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="pull-right">
+                                        <button class="btn btn-primary" tooltips tooltip-side="bottom" ng-click="adicionarPessoa()" tooltip-template="Novo Cadastro" title="Incluir">Novo Cadastro</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                            <br />
+                            <table class="table table-striped Datatable">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Data de cadastro</th>
+                                        <th>Data da última atualização</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="pessoa in pessoasDesaparecidas">
+                                        <td>{{pessoa.NOME_DESAPARECIDO}}</td>
+                                        <td>{{pessoa.dtCadastro}}</td>
+                                        <td>{{pessoa.dtUltimaAtualizacao}}</td>
+                                        <td>
+                                            <div class="visible-md visible-lg hidden-sm hidden-xs">
+                                                <a ng-click="editarPessoa(pessoa)" class="btn btn-transparent btn-xs" data-toggle="tooltip" title="Editar"><i class="fa fa-pencil"></i></a>
+                                                <a ng-click="excluir(pessoa)" class="btn btn-transparent btn-xs" data-toggle="tooltip" title="Excluir"><i class="fa fa-times fa fa-white"></i></a>
+                                                <script>
+                                                    $(document).ready(function () {
+                                                        $('[data-toggle="tooltip"]').tooltip();
+                                                    });
+                                                </script>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div ng-show="isCadastro" class="container">
+            <!-- Nova Pessoa Desaparecida-->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-white">
+                        <div class="col-md-10">
+                            <br />
+                            <h2 class="page-title" ng-if="!editMode">Cadastrar Pessoa Desaparecida</h2>
+                            <h2 class="page-title" ng-if="editMode">Atualizar Pessoa Desaparecida</h2>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="widget-controls" ng-if="editMode">
+                                <a ng-href="#/index">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <form novalidate name="formPessoa" role="form" ng-submit="salvarPessoa()">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div ng-init="InicializaFormulario(formPessoa)"></div>
+                                        <label>Nome</label>
+                                        <input ng-disabled="editMode" type="text" class="form-control" name="nome" placeholder="Nome" maxlength="100" required autofocus ng-model="pessoa.NOME_DESAPARECIDO" />
+                                        <span class="form-control alert-danger" ng-show="formPessoa.$submitted && formPessoa.nome.$error.required">Campo <strong>nome</strong> é obrigatório</span>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-xs-5">
+                                        <label>RG</label>
+                                        <input ng-disabled="editMode" type="text" class="form-control" name="rg" placeholder="RG" mask="99.999.999-9" clean="true" maxlength="14" required ng-model="pessoa.RG_DESAPARECIDO" />
+                                        <span class="form-control alert-danger" ng-show="formPessoa.$submitted && formPessoa.rg.$error.required">Campo <strong>RG</strong> é obrigatório</span>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <label>CPF</label>
+                                        <input ng-disabled="editMode" type="text" class="form-control" name="cpf" placeholder="CPF" maxlength="14" mask="999.999.999-99" clean="true" required ng-model="pessoa.CPF_DESAPARECIDO" />
+                                        <span class="form-control alert-danger" ng-show="formPessoa.$submitted && formPessoa.cpf.$error.required">Campo <strong>CPF</strong> é obrigatório</span>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <label class="control-label" for="horario">Horario ultima vez visto</label>
+                                        <input ng-disabled="editMode" type="text" class="form-control" name="horario" placeholder="Horario" mask="29:59" maxlength="14" ng-model="pessoa.HORARIO_DESAPARECIDO" />
+                                        <!--<span class="form-control alert-danger" ng-show="formPessoa.$submitted && formPessoa.horario.$error.required">Campo <strong>sexo</strong> é obrigatório</span>-->
+                                    </div>
+                                </div>
+                                <br />
+                                <div ng-disabled="true">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <label>Data em que o desaparecido foi visto pela ultima vez</label>
+                                            <input ng-disabled="editMode" type="text" class="form-control" name="dtUltimaVezVisto" placeholder="Data ultima vez visto" mask="99/99/9999" maxlength="10" required ng-model="pessoa.DATA_DESAPARECIDO" />
+                                            <span class="form-control alert-danger" ng-show="formPessoa.$submitted && formPessoa.dtUltimaVezVisto.$error.required">Campo <strong>Data Ultima vez que foi visto</strong> é obrigatório</span>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <label>Anexo do boletim de ocorrencia</label>
+                                            <input ng-disabled="editMode" type="file" class="form-control" ngf-select="uploadFiles($file, $invalidFiles)" ng-model="pessoa.BO_DESAPARECIDO" name="arquivo" ngf-max-size="10MB" ngf-model-invalid="errorFile">
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <label>Resumo</label>
+                                            <textarea rows="5" ng-disabled="editMode" type="text" class="form-control" name="resumo" placeholder="Faça um breve resumo sobre o desaparecimento" maxlength="255" required ng-model="pessoa.CARACTERISTICAS_DESAPARECIDO" />
+                                            <span class="form-control alert-danger" ng-show="formPessoa.$submitted && formPessoa.resumo.$error.required">Campo <strong>número</strong> é obrigatório</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" ng-hide="editMode">
+                                    <div class="col-xs-6">
+                                        <label>Imagem do desaparecido</label>
+                                        <input type="file" class="form-control" onchange="angular.element(this).scope().setImgAsBase64(this)" name="arquivoFoto" ngf-max-size="5MB">
+                                    </div>
+                                </div>
+                                <div ng-hide="!editMode">
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <label>Imagem cadastrada do desaparecido</label>
+                                        </div>
+                                        <div class="col-xs-2">
+                                            <label>Comparar Imagem</label>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <input type="file" class="form-control" onchange="angular.element(this).scope().setImgComparar(this)" name="arquivoFotoCompara" ngf-max-size="5MB">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <div class="row">
+                                                <img class="center-block" style="width:auto!important;height:320px!important; border-radius:10px !important" ng-src="{{pessoa.STR_FOTO_DESAPARECIDO}}" />
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <div class="row">
+                                                <img class="center-block" ng-show="showfotoComparacao" ng-src="{{fotoComparacao}}" style="width:auto!important;height:320px!important; border-radius:10px !important">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <div><button type="button" class="btn btn-primary" ng-click="comparar()">Comparar</button></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <label>Local onde a pessoa foi vista pela última vez</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-8">
+                                        <input id="pac-input" class="controls form-group" style="width:80% !important; margin-top:1.3% !important;" type="text" placeholder="Pesquisar">
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div id="map" class="form-control" style="overflow: visible !important; margin:0; padding:0; height:500px;"></div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="center-div col-sm-3">
+                                        <button type="submit" class="btn btn-primary">Salvar</button>
+                                        <a ng-click="isCadastro = !isCadastro" ng-hide="editMode" class="btn btn-primary">Voltar</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <modal visible="ModalExcluir" on-sown="modalOneShown()" on-hide="modalOneHide()">
+            <modal-header title="Excluir Usuário"></modal-header>
+            <modal-body>
+                Deseja excluir o cadastro de <b>{{cadastroExcluir.NOME_DESAPARECIDO}}</b>?
+            </modal-body>
+            <modal-footer>
+                <div>
+                    <button type="button" class="btn btn-default" ng-click="FechaDialog()">Não</button>
+                    <button type="button" class="btn btn-primary" ng-click="deletar()">Sim</button>
+                </div>
+            </modal-footer>
+        </modal>
+    </main>
+</div>
+
+

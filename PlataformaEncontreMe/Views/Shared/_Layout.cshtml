@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+    <title>Plataforma Encontre.Me</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!--CSS-->
+    <link rel="stylesheet" type="text/css" href="~/Content/admin-all-demo.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/application.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/page-animations.css" />
+</head>
+
+<body ng-app="encontreMe" ng-class="{'fixed-header': app.state['fixed-header'], 'login-page': $state.is('login'),}"
+      class="fixed-header fixed-sidebar ng-scope">
+    @RenderPage("Topo.cshtml")
+    @RenderBody()
+    <div class="padding-container">
+        <ng-view></ng-view>
+    </div>
+    @RenderPage("Rodape.cshtml")
+</body>
+</html>

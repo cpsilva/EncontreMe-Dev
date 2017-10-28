@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ENCONTREMEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DESAPARECIDO">
+          <Key>
+            <PropertyRef Name="COD_DESAPARECIDO" />
+          </Key>
+          <Property Name="COD_DESAPARECIDO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NOME_DESAPARECIDO" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="RG_DESAPARECIDO" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="CPF_DESAPARECIDO" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="BO_DESAPARECIDO" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="HORARIO_DESAPARECIDO" Type="time" Precision="7" />
+          <Property Name="DATA_DESAPARECIDO" Type="date" Nullable="false" />
+          <Property Name="CARACTERISTICAS_DESAPARECIDO" Type="varchar(max)" Nullable="false" />
+          <Property Name="FOTO_DESAPARECIDO" Type="varchar(max)" Nullable="false" />
+          <Property Name="COD_USUARIO" Type="int" />
+        </EntityType>
+        <EntityType Name="LOCALIZACAO">
+          <Key>
+            <PropertyRef Name="COD_LOCALIZACAO" />
+          </Key>
+          <Property Name="COD_LOCALIZACAO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="COD_DESAPARECIDO" Type="int" Nullable="false" />
+          <Property Name="LATITUDE_LOCALIZACAO" Type="varchar(max)" Nullable="false" />
+          <Property Name="LONGITUDE_LOCALIZACAO" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="USUARIO">
+          <Key>
+            <PropertyRef Name="COD_USUARIO" />
+          </Key>
+          <Property Name="COD_USUARIO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NOME_USUARIO" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="CPF_USUARIO" Type="nchar" MaxLength="11" Nullable="false" />
+          <Property Name="CEP_USUARIO" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="ENDERECO_USUARIO" Type="varchar" MaxLength="100" />
+          <Property Name="CIDADE_USUARIO" Type="varchar" MaxLength="100" />
+          <Property Name="ESTADO_USUARIO" Type="char" MaxLength="2" />
+          <Property Name="FOTO_USUARIO" Type="image" />
+          <Property Name="PARENTESCO_USUARIO" Type="varchar" MaxLength="50" />
+          <Property Name="EMAIL_USUARIO" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="SENHA_USUARIO" Type="varchar" MaxLength="14" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__DESAPAREC__COD_U">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
+          <End Role="DESAPARECIDO" Type="Self.DESAPARECIDO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="COD_USUARIO" />
+            </Principal>
+            <Dependent Role="DESAPARECIDO">
+              <PropertyRef Name="COD_USUARIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LOCALIZAC__COD_D">
+          <End Role="DESAPARECIDO" Type="Self.DESAPARECIDO" Multiplicity="1" />
+          <End Role="LOCALIZACAO" Type="Self.LOCALIZACAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DESAPARECIDO">
+              <PropertyRef Name="COD_DESAPARECIDO" />
+            </Principal>
+            <Dependent Role="LOCALIZACAO">
+              <PropertyRef Name="COD_DESAPARECIDO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ENCONTREMEModelStoreContainer">
+          <EntitySet Name="DESAPARECIDO" EntityType="Self.DESAPARECIDO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LOCALIZACAO" EntityType="Self.LOCALIZACAO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USUARIO" EntityType="Self.USUARIO" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__DESAPAREC__COD_U" Association="Self.FK__DESAPAREC__COD_U">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="DESAPARECIDO" EntitySet="DESAPARECIDO" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LOCALIZAC__COD_D" Association="Self.FK__LOCALIZAC__COD_D">
+            <End Role="DESAPARECIDO" EntitySet="DESAPARECIDO" />
+            <End Role="LOCALIZACAO" EntitySet="LOCALIZACAO" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ENCONTREMEModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DESAPARECIDO">
+          <Key>
+            <PropertyRef Name="COD_DESAPARECIDO" />
+          </Key>
+          <Property Name="COD_DESAPARECIDO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOME_DESAPARECIDO" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RG_DESAPARECIDO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CPF_DESAPARECIDO" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BO_DESAPARECIDO" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HORARIO_DESAPARECIDO" Type="Time" Precision="7" />
+          <Property Name="DATA_DESAPARECIDO" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CARACTERISTICAS_DESAPARECIDO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FOTO_DESAPARECIDO" Type="String" Nullable="false" />
+          <Property Name="COD_USUARIO" Type="Int32" />
+          <NavigationProperty Name="USUARIO" Relationship="ENCONTREMEModel.FK__DESAPAREC__COD_U" FromRole="DESAPARECIDO" ToRole="USUARIO" />
+          <NavigationProperty Name="LOCALIZACAO" Relationship="ENCONTREMEModel.FK__LOCALIZAC__COD_D" FromRole="DESAPARECIDO" ToRole="LOCALIZACAO" />
+        </EntityType>
+        <EntityContainer Name="ENCONTREMEEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DESAPARECIDO" EntityType="Self.DESAPARECIDO" />
+          <EntitySet Name="LOCALIZACAO" EntityType="ENCONTREMEModel.LOCALIZACAO" />
+          <EntitySet Name="USUARIO" EntityType="ENCONTREMEModel.USUARIO" />
+          <AssociationSet Name="FK__DESAPAREC__COD_U" Association="ENCONTREMEModel.FK__DESAPAREC__COD_U">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="DESAPARECIDO" EntitySet="DESAPARECIDO" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LOCALIZAC__COD_D" Association="ENCONTREMEModel.FK__LOCALIZAC__COD_D">
+            <End Role="DESAPARECIDO" EntitySet="DESAPARECIDO" />
+            <End Role="LOCALIZACAO" EntitySet="LOCALIZACAO" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="LOCALIZACAO">
+          <Key>
+            <PropertyRef Name="COD_LOCALIZACAO" />
+          </Key>
+          <Property Name="COD_LOCALIZACAO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="COD_DESAPARECIDO" Type="Int32" Nullable="false" />
+          <Property Name="LATITUDE_LOCALIZACAO" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="LONGITUDE_LOCALIZACAO" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DESAPARECIDO" Relationship="ENCONTREMEModel.FK__LOCALIZAC__COD_D" FromRole="LOCALIZACAO" ToRole="DESAPARECIDO" />
+        </EntityType>
+        <EntityType Name="USUARIO">
+          <Key>
+            <PropertyRef Name="COD_USUARIO" />
+          </Key>
+          <Property Name="COD_USUARIO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOME_USUARIO" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="CPF_USUARIO" Type="String" Nullable="false" MaxLength="11" FixedLength="true" Unicode="true" />
+          <Property Name="CEP_USUARIO" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ENDERECO_USUARIO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CIDADE_USUARIO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ESTADO_USUARIO" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="FOTO_USUARIO" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="PARENTESCO_USUARIO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EMAIL_USUARIO" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SENHA_USUARIO" Type="String" Nullable="false" MaxLength="14" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DESAPARECIDO" Relationship="ENCONTREMEModel.FK__DESAPAREC__COD_U" FromRole="USUARIO" ToRole="DESAPARECIDO" />
+        </EntityType>
+        <Association Name="FK__DESAPAREC__COD_U">
+          <End Type="ENCONTREMEModel.USUARIO" Role="USUARIO" Multiplicity="0..1" />
+          <End Type="ENCONTREMEModel.DESAPARECIDO" Role="DESAPARECIDO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="COD_USUARIO" />
+            </Principal>
+            <Dependent Role="DESAPARECIDO">
+              <PropertyRef Name="COD_USUARIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LOCALIZAC__COD_D">
+          <End Type="ENCONTREMEModel.DESAPARECIDO" Role="DESAPARECIDO" Multiplicity="1" />
+          <End Type="ENCONTREMEModel.LOCALIZACAO" Role="LOCALIZACAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DESAPARECIDO">
+              <PropertyRef Name="COD_DESAPARECIDO" />
+            </Principal>
+            <Dependent Role="LOCALIZACAO">
+              <PropertyRef Name="COD_DESAPARECIDO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ENCONTREMEModelStoreContainer" CdmEntityContainer="ENCONTREMEEntities">
+          <EntitySetMapping Name="DESAPARECIDO">
+            <EntityTypeMapping TypeName="ENCONTREMEModel.DESAPARECIDO">
+              <MappingFragment StoreEntitySet="DESAPARECIDO">
+                <ScalarProperty Name="COD_DESAPARECIDO" ColumnName="COD_DESAPARECIDO" />
+                <ScalarProperty Name="NOME_DESAPARECIDO" ColumnName="NOME_DESAPARECIDO" />
+                <ScalarProperty Name="RG_DESAPARECIDO" ColumnName="RG_DESAPARECIDO" />
+                <ScalarProperty Name="CPF_DESAPARECIDO" ColumnName="CPF_DESAPARECIDO" />
+                <ScalarProperty Name="BO_DESAPARECIDO" ColumnName="BO_DESAPARECIDO" />
+                <ScalarProperty Name="HORARIO_DESAPARECIDO" ColumnName="HORARIO_DESAPARECIDO" />
+                <ScalarProperty Name="DATA_DESAPARECIDO" ColumnName="DATA_DESAPARECIDO" />
+                <ScalarProperty Name="CARACTERISTICAS_DESAPARECIDO" ColumnName="CARACTERISTICAS_DESAPARECIDO" />
+                <ScalarProperty Name="FOTO_DESAPARECIDO" ColumnName="FOTO_DESAPARECIDO" />
+                <ScalarProperty Name="COD_USUARIO" ColumnName="COD_USUARIO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LOCALIZACAO">
+            <EntityTypeMapping TypeName="ENCONTREMEModel.LOCALIZACAO">
+              <MappingFragment StoreEntitySet="LOCALIZACAO">
+                <ScalarProperty Name="LONGITUDE_LOCALIZACAO" ColumnName="LONGITUDE_LOCALIZACAO" />
+                <ScalarProperty Name="LATITUDE_LOCALIZACAO" ColumnName="LATITUDE_LOCALIZACAO" />
+                <ScalarProperty Name="COD_DESAPARECIDO" ColumnName="COD_DESAPARECIDO" />
+                <ScalarProperty Name="COD_LOCALIZACAO" ColumnName="COD_LOCALIZACAO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USUARIO">
+            <EntityTypeMapping TypeName="ENCONTREMEModel.USUARIO">
+              <MappingFragment StoreEntitySet="USUARIO">
+                <ScalarProperty Name="SENHA_USUARIO" ColumnName="SENHA_USUARIO" />
+                <ScalarProperty Name="EMAIL_USUARIO" ColumnName="EMAIL_USUARIO" />
+                <ScalarProperty Name="PARENTESCO_USUARIO" ColumnName="PARENTESCO_USUARIO" />
+                <ScalarProperty Name="FOTO_USUARIO" ColumnName="FOTO_USUARIO" />
+                <ScalarProperty Name="ESTADO_USUARIO" ColumnName="ESTADO_USUARIO" />
+                <ScalarProperty Name="CIDADE_USUARIO" ColumnName="CIDADE_USUARIO" />
+                <ScalarProperty Name="ENDERECO_USUARIO" ColumnName="ENDERECO_USUARIO" />
+                <ScalarProperty Name="CEP_USUARIO" ColumnName="CEP_USUARIO" />
+                <ScalarProperty Name="CPF_USUARIO" ColumnName="CPF_USUARIO" />
+                <ScalarProperty Name="NOME_USUARIO" ColumnName="NOME_USUARIO" />
+                <ScalarProperty Name="COD_USUARIO" ColumnName="COD_USUARIO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

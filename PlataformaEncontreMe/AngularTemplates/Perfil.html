@@ -1,0 +1,106 @@
+﻿<!--Chave API Google Maps: AIzaSyAHMgbkEvkhYWP0AQUuxpwXlP4y7PGB5oM -->
+
+<div class="container" ng-controller="perfilController" style="margin-right: 0px !important; padding-right: 0px !important; padding-left: 180.156px !important; padding-top: 8% !important;">
+    <div class="container">
+
+
+        <!-- Nova Pessoa Desaparecida-->
+        <div class="row">
+            <div class="col-md-10">
+                <div class="panel panel-white">
+                    <div class="panel-body">
+                        <section class="widget">
+                            <header>
+                                <h4>Perfil Caio Pires Silva</h4><br>
+                                <div class="widget-controls">
+
+                                </div>
+                            </header>
+                            <div class="widget-body">
+                                <form novalidate role="form" id="formulario" name="formulario" ng-submit="salvar()">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div></div>
+                                                    <label for="Nome">Nome Completo</label>
+                                                    <input type="text" ng-model="usu.CUSU_NOME" name="nome" class="form-control" placeholder="Nome" maxlength="100" required />
+                                                    <!--<span ng-show="formulario.$submitted && formulario.nome.$error.required" class="form-control alert-danger">Nome obrigatório</span>-->
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <label for="email">Email</label>
+                                                    <input type="email" ng-model="usu.CUSU_EMAIL" name="email" class="form-control" placeholder="Email" maxlength="50" required />
+                                                    <!--<span ng-show="formulario.$submitted && formulario.email.$error.required" class="form-control alert-danger">Email obrigatório</span>
+                                                    <span ng-show="formulario.$submitted && formulario.email.$error.email" class="form-control alert-danger">Formato de email incorreto</span>-->
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <label for="senha">Senha</label>
+                                                    <input type="password" ng-model="usu.CUSU_SENHA" name="senha" class="form-control" placeholder="Senha" maxlength="20" required />
+                                                    <!--<span ng-show="formulario.$submitted && formulario.senha.$error.required" class="form-control alert-danger">Senha obrigatória</span>-->
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-sm-6 text-align-center">
+                                            <a ngf-select="uploadFiles($file, $invalidFiles)" ng-model="foto" accept="image/*" class="fc-event-draggable">
+                                                <span class="thumb-xlg">
+                                                    <!-- <img class="img-responsive img-circle" ng-src="Upload\Usuarios\{{usu.CUSU_FOTO}}" ng-model="usu.CUSU_FOTO" ng-show="usu.CUSU_FOTO" />-->
+                                                    <img class="img-responsive img-circle" style="position:center !important;" src="../img/retrato.jpg" ng-model="usu.CUSU_FOTO" ng-show="!usu.CUSU_FOTO" />
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-10">
+                                            <label for="cpf">CPF</label>
+                                            <input type="text" class="form-control" nome="cpf" ng-model="cpf1" mask="999.999.999-99" placeholder="CPF" maxlength="14" required />
+                                            <!--<span ng-show="formulario.$submitted && formulario.processo.$error.required" class="form-control alert-danger">Processo obrigatório</span>-->
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <label for="endereco">Endereço</label>
+                                            <input type="text" ng-model="endereco" name="endereco" class="form-control" placeholder="Endereço" maxlength="100" required />
+                                            <!--<span ng-show="formulario.$submitted && formulario.processo.$error.required" class="form-control alert-danger">Processo obrigatório</span>-->
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <label for="cep">CEP</label>
+                                            <input type="text" ng-model="cep1" name="cep" mask="99999-999" clean="true" class="form-control" placeholder="CEP" maxlength="9" required />
+                                            <!--<span ng-show="formulario.$submitted && formulario.processo.$error.required" class="form-control alert-danger">Processo obrigatório</span>-->
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <label for="cidade">Cidade</label>
+                                            <input type="text" ng-model="cidade" name="cidade" class="form-control" placeholder="Cidade" maxlength="100" required />
+                                            <!--<span ng-show="formulario.$submitted && formulario.processo.$error.required" class="form-control alert-danger">Processo obrigatório</span>-->
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <label for="estado">Estado</label>
+                                            <input type="text" ng-model="estado" name="estado" class="form-control" placeholder="Estado" maxlength="100" required />
+                                            <!--<span ng-show="formulario.$submitted && formulario.processo.$error.required" class="form-control alert-danger">Processo obrigatório</span>-->
+                                        </div>   
+                                        <div class="col-sm-10">
+                                            <label for="tel">Telefone para contato</label>
+                                            <input type="text" ng-model="tel1" name="tel" mask="(99) 9999-9999" clean="true" class="form-control" placeholder="Telefone para Contato" maxlength="14" required />
+                                            <!--<span ng-show="formulario.$submitted && formulario.processo.$error.required" class="form-control alert-danger">Processo obrigatório</span>-->
+                                        </div> 
+                                    </div>
+                                    <div class="form-actions">
+                                        <div class="row">
+                                            <div class="col-md-offset-10 col-md-2">
+                                                <button type="submit" class="btn btn-primary" form="formulario">Salvar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
