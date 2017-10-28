@@ -80,10 +80,11 @@ namespace PlataformaEncontreMe.Controllers
             {
                 return BadRequest(ModelState);
             }
-            db.DESAPARECIDO.Add(dESAPARECIDO.Map());
+            var desaparecido = dESAPARECIDO.Map();
+            db.DESAPARECIDO.Add(desaparecido);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = dESAPARECIDO.COD_DESAPARECIDO }, dESAPARECIDO);
+            return Ok(desaparecido.MapFromDb());
         }
 
         // DELETE: api/DESAPARECIDO/5
