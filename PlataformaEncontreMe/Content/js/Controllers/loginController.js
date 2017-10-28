@@ -1,4 +1,4 @@
-﻿angular.module('encontreMe').controller('LoginController', function ($scope, $http) {
+﻿angular.module('encontreMe').controller('loginController', function ($scope, $http) {
 
 
 });

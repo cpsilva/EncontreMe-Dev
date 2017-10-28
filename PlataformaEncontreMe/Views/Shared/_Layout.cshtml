@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" ng-app="encontreMe" class="js csstransforms csstransforms3d csstransitions ng-scope">
 
 <head>
     <meta charset="UTF-8">
@@ -11,15 +11,18 @@
     <link rel="stylesheet" type="text/css" href="~/Content/admin-all-demo.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/application.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/page-animations.css" />
+    @RenderPage("~/Views/Shared/Rodape.cshtml")
 </head>
 
-<body ng-app="encontreMe" ng-class="{'fixed-header': app.state['fixed-header'], 'login-page': $state.is('login'),}"
+<body ng-class="{'login-page': app.state('login')}"
       class="fixed-header fixed-sidebar ng-scope">
-    @RenderPage("Topo.cshtml")
-    @RenderBody()
+    @RenderPage("~/Views/Shared/Topo.cshtml")
+    
     <div class="padding-container">
         <ng-view></ng-view>
     </div>
-    @RenderPage("Rodape.cshtml")
+    
+    @RenderBody()
+
 </body>
 </html>

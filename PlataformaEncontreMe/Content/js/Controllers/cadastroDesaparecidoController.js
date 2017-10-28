@@ -46,7 +46,6 @@
 
     $scope.editarPessoa = function (pessoa) {
         $scope.pessoa = pessoa;
-        $scope.pessoa.DATA_DESAPARECIDO = $scope.pessoa.DATA_DESAPARECIDO != null ? new Date($scope.pessoa.DATA_DESAPARECIDO) : null
         $scope.isCadastro = true;
         $scope.resetForm();
         window.setTimeout(function () { Map.init($scope.mapMarkerCallBack); }, 1000);
@@ -166,7 +165,7 @@
         }
         else {
             $scope.f ? $scope.upload($scope.f, function () {
-
+                console.log($scope.pessoa);
                 recursoListaDesaparecido.salvar($scope.pessoa, function (retorno) {
                     ngNotify.set('Pessoa cadastrada com sucesso', 'info');
                     $scope.isCadastro = false;
@@ -181,8 +180,6 @@
     }
 
     $scope.deletar = function () {
-
-        //var divLoad = loading.deletarDados();
 
         recursoListaDesaparecido.excluir({ desaparecidoId: $scope.cadastroExcluir.COD_DESAPARECIDO }, function (retorno) {
             var indice = 0;

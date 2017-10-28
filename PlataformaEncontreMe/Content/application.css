@@ -27947,13 +27947,13 @@ input[type=search], .input-group-lg > input[type=search], .input-group-sm > inpu
 /**             LOGIN             **/
 /***********************************/
 .widget-login-shadow {
-    box-shadow: 0px 0px 0px 99999px #242424 !important;
     z-index: 4;
-    background-color: #242424;
+    background: radial-gradient(circle at 1.98% 20.98%,#4b6cb7,transparent 100%),radial-gradient(circle at 98.02% 20.98%,#182848,transparent 100%),radial-gradient(circle at 50% 50%,#0cc285,#0cc285 100%)
 }
 
 .login-page {
-    background-color: #dddddd;
+    /*background-color: #dddddd;background-color: #242424;box-shadow: 0px 0px 0px 99999px #242424 !important;*/
+    background: radial-gradient(circle at 1.98% 20.98%,#4b6cb7,transparent 100%),radial-gradient(circle at 98.02% 20.98%,#182848,transparent 100%),radial-gradient(circle at 50% 50%,#0cc285,#0cc285 100%)
 }
 
     .login-page .page-footer {
