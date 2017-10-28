@@ -5,10 +5,12 @@
     $scope.pessoa = {};
     var Localizacao = [];
     $scope.showfotoComparacao = false;
+    $scope.editPessoa = false;
 
     $scope.isCadastro = false;
     $scope.meuForm = '';
     $scope.editMode = false;
+    $scope.blockCadastro = false;
 
     $scope.FechaDialog = function () {
         $scope.ModalExcluir = false;
@@ -24,9 +26,11 @@
         $scope.meuForm.$setUntouched();
     }
 
-    //$scope.$watch('pessoa.DATA_DESAPARECIDO', function (newValue) {
-    //    $scope.pessoa.DATA_DESAPARECIDO = $filter('date')(newValue, 'dd/MM/yyyy');
-    //});
+    $scope.$watch('pessoa.DATA_DESAPARECIDO', function (newValue) {
+        if ($scope.editMode && !$routeParams.id) {
+            $scope.pessoa.DATA_DESAPARECIDO = $filter('date')(newValue, 'ddMMyyyy');
+        }
+    });
 
     $scope.mapMarkerCallBack = function (latitude, longitude) {
         Localizacao.push({ LATITUDE_LOCALIZACAO: latitude, LONGITUDE_LOCALIZACAO: longitude });
@@ -41,53 +45,69 @@
         alert($scope.place.name + ' : ' + $scope.place.lat + ', ' + $scope.place.lng);
     }
 
-
-    Map.init($scope.mapMarkerCallBack);
-
-    $scope.editarPessoa = function (pessoa) {
-        $scope.pessoa = pessoa;
-        $scope.pessoa.DATA_DESAPARECIDO = $scope.pessoa.DATA_DESAPARECIDO != null ? new Date($scope.pessoa.DATA_DESAPARECIDO) : null
-        $scope.isCadastro = true;
-        $scope.resetForm();
-        window.setTimeout(function () { Map.init($scope.mapMarkerCallBack); }, 1000);
+    $scope.removerPessoa = function (pessoa) {
+        alert('falta implementar back end e atualizar a lista para remover a pessoa excluída')
     }
 
+    $scope.editarPessoa = function (pessoa) {
+        $scope.blockCadastro = false;
+        carregarDadosPessoa(pessoa.COD_DESAPARECIDO);
+    }
 
     $scope.adicionarPessoa = function () {
         $scope.pessoa = {};
         $scope.isCadastro = true;
         $scope.resetForm();
         window.setTimeout(function () { Map.init($scope.mapMarkerCallBack); }, 1000);
+        $scope.blockCadastro = false;
     }
 
     $scope.buscarTodos = function () {
+
+        //var divLoad = loading.carregarDados();
+
         recursoListaDesaparecido.query(function (cad) {
             $scope.pessoasDesaparecidas = cad;
+            //divLoad.finish();
         }, function (erro) {
+            //divLoad.finish();
             ngNotify.set('Não foi possivel buscar todos as pessoas', 'error');
         });
     };
+
+    function carregarDadosPessoa(id, filter) {
+        Localizacao = [];
+        recursoListaDesaparecido.busca({ id: id },
+            function (data) {
+                $scope.pessoa = data;
+                $scope.editMode = true;
+                window.setTimeout(function () {
+                    if (data.Localizacao && data.Localizacao.length > 0) {
+                        Localizacao = data.Localizacao;
+                        var lastLoc = Localizacao[Localizacao.length - 1];
+                        Map.init($scope.mapMarkerCallBack, { lat: lastLoc.LATITUDE_LOCALIZACAO, lng: lastLoc.LONGITUDE_LOCALIZACAO });
+                        for (var i = 0; i < Localizacao.length; i++) {
+                            Map.addMarker(Localizacao[i].LATITUDE_LOCALIZACAO, Localizacao[i].LONGITUDE_LOCALIZACAO);
+                        }
+                    }
+                    else {
+                        Map.init($scope.mapMarkerCallBack);
+                    }
+                }, 1000);
+                $scope.isCadastro = true;
+                if (filter)
+                    $scope.pessoa.DATA_DESAPARECIDO = $filter('date')($scope.pessoa.DATA_DESAPARECIDO, 'ddMMyyyy');
+            },
+            function (erro) { ngNotify.set('Cadastro atualizado com sucesso', 'info'); });
+        $scope.isCadastro = true;
+    }
 
     if (!$routeParams.id) {
         $scope.buscarTodos();
         $scope.editMode = false;
     } else {
-        Localizacao = [];
-        recursoListaDesaparecido.busca({ id: $routeParams.id },
-            function (data) {
-                $scope.pessoa = data;
-                $scope.editMode = true;
-                if (data.Localizacao && data.Localizacao.length > 0) {
-                    Localizacao = data.Localizacao;
-                    for (var i = 0; i < Localizacao.length; i++) {
-                        Map.addMarker(Localizacao[i].LATITUDE_LOCALIZACAO, Localizacao[i].LONGITUDE_LOCALIZACAO);
-                    }
-                    //Marca os pontos no mapa
-                }
-                $scope.isCadastro = true;
-            },
-            function (erro) { ngNotify.set('Não foi possivel realizar a busca', 'error'); });
-        $scope.isCadastro = true;
+        carregarDadosPessoa($routeParams.id, true);
+        $scope.blockCadastro = true;
     }
 
     //Upload
@@ -112,7 +132,7 @@
         var arquivo = file.files[0];
         var reader = new FileReader();
         reader.onloadend = function () {
-            $scope.pessoa.STR_FOTO_DESAPARECIDO = reader.result;
+            $scope.pessoa.FOTO_DESAPARECIDO = reader.result;
         }
         reader.readAsDataURL(arquivo);
     }
@@ -137,7 +157,7 @@
                     ngNotify.set('Existe semelhança entre as imagens', 'info');
                 }
                 else {
-                    ngNotify.set('Não existe semelhança entre as imagens', 'error');
+                    ngNotify.set('Não existe semelhança entre as imagens', 'warning');
                 }
             },
             function (erro) {
@@ -157,7 +177,6 @@
             console.log($scope.pessoa);
             recursoListaDesaparecido.atualizar({ desaparecidoId: $scope.pessoa.COD_DESAPARECIDO }, $scope.pessoa, function (retorno) {
                 ngNotify.set('Cadastro atualizado com sucesso', 'info');
-                $scope.isCadastro = false;
                 $scope.buscarTodos();
             }, function (erro) {
                 ngNotify.set('Não foi possivel atualizar o registro', 'error');
@@ -166,10 +185,9 @@
         }
         else {
             $scope.f ? $scope.upload($scope.f, function () {
-
                 recursoListaDesaparecido.salvar($scope.pessoa, function (retorno) {
                     ngNotify.set('Pessoa cadastrada com sucesso', 'info');
-                    $scope.isCadastro = false;
+                    $scope.pessoa = retorno;
                     $scope.buscarTodos();
                 }, function (erro) {
                     ngNotify.set('Não foi possivel cadastrar a pessoa', 'error');
@@ -187,14 +205,16 @@
         recursoListaDesaparecido.excluir({ desaparecidoId: $scope.cadastroExcluir.COD_DESAPARECIDO }, function (retorno) {
             var indice = 0;
             angular.forEach($scope.pessoa, function (valor, chave) {
-                if (valor.id == $scope.cadastroExcluir.COD_DESAPARECIDO) {
+                if (valor.Id == $scope.cadastroExcluir.COD_DESAPARECIDO) {
                     $scope.pessoa.splice(indice, 1);
                 }
                 indice++;
             })
+            //divLoad.finish();
             ngNotify.set('Cadastro deletado com sucesso', 'info');
             $scope.buscarTodos();
         }, function (erro) {
+            divLoad.finish();
             ngNotify.set('Não foi possivel excluir o cadastro', 'error');
             $scope.buscarTodos();
         });

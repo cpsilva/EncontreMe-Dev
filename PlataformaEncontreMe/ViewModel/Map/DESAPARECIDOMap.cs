@@ -16,7 +16,7 @@ namespace PlataformaEncontreMe.ViewModel.Map
                 HORARIO_DESAPARECIDO = model.HORARIO_DESAPARECIDO,
                 NOME_DESAPARECIDO = model.NOME_DESAPARECIDO,
                 RG_DESAPARECIDO = model.RG_DESAPARECIDO,
-                FOTO_DESAPARECIDO = model.STR_FOTO_DESAPARECIDO,
+                FOTO_DESAPARECIDO = model.FOTO_DESAPARECIDO,
                 BO_DESAPARECIDO = model.BO_DESAPARECIDO
             };
 
@@ -39,7 +39,7 @@ namespace PlataformaEncontreMe.ViewModel.Map
             dESAPARECIDO.HORARIO_DESAPARECIDO = model.HORARIO_DESAPARECIDO;
             dESAPARECIDO.NOME_DESAPARECIDO = model.NOME_DESAPARECIDO;
             dESAPARECIDO.RG_DESAPARECIDO = model.RG_DESAPARECIDO;
-            dESAPARECIDO.FOTO_DESAPARECIDO = model.STR_FOTO_DESAPARECIDO;
+            dESAPARECIDO.FOTO_DESAPARECIDO = model.FOTO_DESAPARECIDO;
             dESAPARECIDO.BO_DESAPARECIDO = model.BO_DESAPARECIDO;
 
             //TODO: fazer diff da localização
@@ -61,7 +61,7 @@ namespace PlataformaEncontreMe.ViewModel.Map
                 HORARIO_DESAPARECIDO = model.HORARIO_DESAPARECIDO,
                 NOME_DESAPARECIDO = model.NOME_DESAPARECIDO,
                 RG_DESAPARECIDO = model.RG_DESAPARECIDO,
-                STR_FOTO_DESAPARECIDO = model.FOTO_DESAPARECIDO,
+                FOTO_DESAPARECIDO = model.FOTO_DESAPARECIDO,
                 BO_DESAPARECIDO = model.BO_DESAPARECIDO,
                 COD_DESAPARECIDO = model.COD_DESAPARECIDO
 

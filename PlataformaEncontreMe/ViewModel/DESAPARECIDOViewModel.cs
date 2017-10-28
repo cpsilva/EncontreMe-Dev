@@ -18,7 +18,7 @@ namespace PlataformaEncontreMe.ViewModel
         public Nullable<System.TimeSpan> HORARIO_DESAPARECIDO { get; set; }
         public System.DateTime DATA_DESAPARECIDO { get; set; }
         public string CARACTERISTICAS_DESAPARECIDO { get; set; }
-        public string STR_FOTO_DESAPARECIDO { get; set; }
+        public string FOTO_DESAPARECIDO { get; set; }
         public Nullable<int> COD_USUARIO { get; set; }
 
 

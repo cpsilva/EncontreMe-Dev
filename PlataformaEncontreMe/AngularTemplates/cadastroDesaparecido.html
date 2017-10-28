@@ -79,7 +79,7 @@
                                     <div class="col-xs-12">
                                         <div ng-init="InicializaFormulario(formPessoa)"></div>
                                         <label>Nome</label>
-                                        <input ng-disabled="editMode" type="text" class="form-control" name="nome" placeholder="Nome" maxlength="100" required autofocus ng-model="pessoa.NOME_DESAPARECIDO" />
+                                        <input ng-disabled="blockCadastro" type="text" class="form-control" name="nome" placeholder="Nome" maxlength="100" required autofocus ng-model="pessoa.NOME_DESAPARECIDO" />
                                         <span class="form-control alert-danger" ng-show="formPessoa.$submitted && formPessoa.nome.$error.required">Campo <strong>nome</strong> é obrigatório</span>
                                     </div>
                                 </div>
@@ -87,35 +87,35 @@
                                 <div class="row">
                                     <div class="col-xs-5">
                                         <label>RG</label>
-                                        <input ng-disabled="editMode" type="text" class="form-control" name="rg" placeholder="RG" mask="99.999.999-9" clean="true" maxlength="14" required ng-model="pessoa.RG_DESAPARECIDO" />
+                                        <input ng-disabled="blockCadastro" type="text" class="form-control" name="rg" placeholder="RG" mask="99.999.999-9" clean="true" maxlength="14" required ng-model="pessoa.RG_DESAPARECIDO" />
                                         <span class="form-control alert-danger" ng-show="formPessoa.$submitted && formPessoa.rg.$error.required">Campo <strong>RG</strong> é obrigatório</span>
                                     </div>
                                     <div class="col-xs-4">
                                         <label>CPF</label>
-                                        <input ng-disabled="editMode" type="text" class="form-control" name="cpf" placeholder="CPF" maxlength="14" mask="999.999.999-99" clean="true" required ng-model="pessoa.CPF_DESAPARECIDO" />
+                                        <input ng-disabled="blockCadastro" type="text" class="form-control" name="cpf" placeholder="CPF" maxlength="14" mask="999.999.999-99" clean="true" required ng-model="pessoa.CPF_DESAPARECIDO" />
                                         <span class="form-control alert-danger" ng-show="formPessoa.$submitted && formPessoa.cpf.$error.required">Campo <strong>CPF</strong> é obrigatório</span>
                                     </div>
                                     <div class="col-xs-3">
                                         <label class="control-label" for="horario">Horario ultima vez visto</label>
-                                        <input ng-disabled="editMode" type="text" class="form-control" name="horario" placeholder="Horario" mask="29:59" maxlength="14" ng-model="pessoa.HORARIO_DESAPARECIDO" />
+                                        <input ng-disabled="blockCadastro" type="text" class="form-control" name="horario" placeholder="Horario" mask="29:59" maxlength="14" ng-model="pessoa.HORARIO_DESAPARECIDO" />
                                         <!--<span class="form-control alert-danger" ng-show="formPessoa.$submitted && formPessoa.horario.$error.required">Campo <strong>sexo</strong> é obrigatório</span>-->
                                     </div>
                                 </div>
                                 <br />
-                                <div ng-disabled="true">
+                                <div>
                                     <div class="row">
                                         <div class="col-xs-6">
                                             <label>Data em que o desaparecido foi visto pela ultima vez</label>
-                                            <input ng-disabled="editMode" type="text" class="form-control" name="dtUltimaVezVisto" placeholder="Data ultima vez visto" mask="99/99/9999" maxlength="10" required ng-model="pessoa.DATA_DESAPARECIDO" />
+                                            <input ng-disabled="blockCadastro" type="text" class="form-control" name="dtUltimaVezVisto" placeholder="Data ultima vez visto" mask="99/99/9999" maxlength="10" required ng-model="pessoa.DATA_DESAPARECIDO" />
                                             <span class="form-control alert-danger" ng-show="formPessoa.$submitted && formPessoa.dtUltimaVezVisto.$error.required">Campo <strong>Data Ultima vez que foi visto</strong> é obrigatório</span>
                                         </div>
                                         <div class="col-xs-6">
                                             <label>Anexo do boletim de ocorrencia</label>
-                                            <input ng-disabled="editMode" type="file" class="form-control" ngf-select="uploadFiles($file, $invalidFiles)" ng-model="pessoa.BO_DESAPARECIDO" name="arquivo" ngf-max-size="10MB" ngf-model-invalid="errorFile">
+                                            <input ng-disabled="blockCadastro || editMode" type="file" class="form-control" ngf-select="uploadFiles($file, $invalidFiles)" ng-model="pessoa.BO_DESAPARECIDO" name="arquivo" ngf-max-size="10MB" ngf-model-invalid="errorFile">
                                         </div>
                                         <div class="col-xs-6">
                                             <label>Resumo</label>
-                                            <textarea rows="5" ng-disabled="editMode" type="text" class="form-control" name="resumo" placeholder="Faça um breve resumo sobre o desaparecimento" maxlength="255" required ng-model="pessoa.CARACTERISTICAS_DESAPARECIDO" />
+                                            <textarea rows="5" ng-disabled="blockCadastro" type="text" class="form-control" name="resumo" placeholder="Faça um breve resumo sobre o desaparecimento" maxlength="255" required ng-model="pessoa.CARACTERISTICAS_DESAPARECIDO" />
                                             <span class="form-control alert-danger" ng-show="formPessoa.$submitted && formPessoa.resumo.$error.required">Campo <strong>número</strong> é obrigatório</span>
                                         </div>
                                     </div>
@@ -142,7 +142,7 @@
                                     <div class="row">
                                         <div class="col-xs-6">
                                             <div class="row">
-                                                <img class="center-block" style="width:auto!important;height:320px!important; border-radius:10px !important" ng-src="{{pessoa.STR_FOTO_DESAPARECIDO}}" />
+                                                <img class="center-block" style="width:auto!important;height:320px!important; border-radius:10px !important" ng-src="{{pessoa.FOTO_DESAPARECIDO}}" />
                                             </div>
                                         </div>
                                         <div class="col-xs-6">
@@ -177,7 +177,7 @@
                                 <br />
                                 <div class="row">
                                     <div class="center-div col-sm-3">
-                                        <button type="submit" class="btn btn-primary">Salvar</button>
+                                        <button ng-click="salvarPessoa()" type="button" class="btn btn-primary">Salvar</button>
                                         <a ng-click="isCadastro = !isCadastro" ng-hide="editMode" class="btn btn-primary">Voltar</a>
                                     </div>
                                 </div>

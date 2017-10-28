@@ -15,13 +15,15 @@
             }
         })
     })
-
     .service('Map', function ($q) {
         var map = null;
-        this.init = function (mapMarkerCallBack) {
+        this.init = function (mapMarkerCallBack, initalLocation) {
+            var lat = initalLocation ? initalLocation.lat : -23.5486;
+            var lng = initalLocation ? initalLocation.lng : -46.6392;
+
             var options = {
-                center: new google.maps.LatLng(-23.5486, -46.6392),
-                zoom: 10,
+                center: new google.maps.LatLng(lat, lng),
+                zoom: 17,
                 mapTypeId: 'roadmap',
                 disableDefaultUI: false
             }
@@ -71,9 +73,7 @@
                 position: { lat: parseFloat(lat), lng: parseFloat(lgn) }
             });
         }
-    })
-
-    .service('CompararImagem', function ($http) {
+    }).service('CompararImagem', function ($http) {
         this.compararImg = function (img, id) {
             return $http.post("/desaparecido/compararimagem", { Id: id, ImgBody: img });
         }
